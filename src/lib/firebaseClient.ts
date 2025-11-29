@@ -1,17 +1,8 @@
-import { initializeApp, getApps, FirebaseApp } from "firebase/app";
-import { 
-  getFirestore, 
-  collection, 
-  addDoc, 
-  getDocs, 
-  serverTimestamp,
-  Firestore,
-  Timestamp,
-  query,
-  orderBy
-} from "firebase/firestore";
+// Import Firebase core & Firestore
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, addDoc, getDocs, serverTimestamp, Timestamp } from "firebase/firestore";
 
-// Firebase configuration
+// Firebase configuration (from Student B)
 const firebaseConfig = {
   apiKey: "AIzaSyCy6rjQ91NJNHhwCvsBAe53DM8LQZRu8sQ",
   authDomain: "student-feedback-app-7bae0.firebaseapp.com",
@@ -22,19 +13,13 @@ const firebaseConfig = {
   measurementId: "G-QD961L1LF7"
 };
 
-// Initialize Firebase only once
-let app: FirebaseApp;
-let db: Firestore;
+// Initialize Firebase app
+const app = initializeApp(firebaseConfig);
 
-try {
-  app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
-  db = getFirestore(app);
-} catch (error) {
-  console.error("Firebase initialization error:", error);
-}
+// Firestore database reference
+export const db = getFirestore(app);
 
-export { db };
-
+// Types
 export interface FeedbackData {
   name: string;
   email: string;
@@ -47,44 +32,30 @@ export interface Feedback extends FeedbackData {
   created_at: Timestamp | null;
 }
 
-export async function createFeedback(data: FeedbackData): Promise<string> {
-  try {
-    const docRef = await addDoc(collection(db, "feedbacks"), {
-      ...data,
-      created_at: serverTimestamp()
-    });
-    return docRef.id;
-  } catch (error) {
-    console.error("Error creating feedback:", error);
-    throw error;
-  }
+// Create a feedback document in Firestore
+export async function createFeedback({ name, email, message, rating }: FeedbackData) {
+  await addDoc(collection(db, "feedbacks"), {
+    name,
+    email,
+    message,
+    rating,
+    created_at: serverTimestamp()
+  });
 }
 
+// Get all feedback documents
 export async function getFeedbacks(): Promise<Feedback[]> {
-  try {
-    const feedbacksRef = collection(db, "feedbacks");
-    const q = query(feedbacksRef, orderBy("created_at", "desc"));
-    const snapshot = await getDocs(q);
-    
-    const results: Feedback[] = [];
-    snapshot.forEach((doc) => {
-      results.push({
-        id: doc.id,
-        ...doc.data()
-      } as Feedback);
-    });
-    
-    return results;
-  } catch (error) {
-    console.error("Error fetching feedbacks:", error);
-    // Return empty array if there's an error (e.g., no index yet)
-    return [];
-  }
+  const snapshot = await getDocs(collection(db, "feedbacks"));
+  const results: Feedback[] = [];
+  snapshot.forEach(doc => {
+    results.push({ id: doc.id, ...doc.data() } as Feedback);
+  });
+  return results;
 }
 
+// Format timestamp for display
 export function formatTimestamp(timestamp: Timestamp | null | undefined): string {
   if (!timestamp) return "";
-  
   try {
     const date = timestamp.toDate();
     return new Intl.DateTimeFormat('en-US', {
