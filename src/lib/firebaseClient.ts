@@ -11,14 +11,15 @@ import {
   orderBy
 } from "firebase/firestore";
 
-// Firebase configuration - Replace with your actual config
+// Firebase configuration
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "your-project.firebaseapp.com",
-  projectId: "your-project-id",
-  storageBucket: "your-project.appspot.com",
-  messagingSenderId: "123456789",
-  appId: "1:123456789:web:abcd1234"
+  apiKey: "AIzaSyCy6rjQ91NJNHhwCvsBAe53DM8LQZRu8sQ",
+  authDomain: "student-feedback-app-7bae0.firebaseapp.com",
+  projectId: "student-feedback-app-7bae0",
+  storageBucket: "student-feedback-app-7bae0.firebasestorage.app",
+  messagingSenderId: "729376853376",
+  appId: "1:729376853376:web:80de7d8556f29adba5c565",
+  measurementId: "G-QD961L1LF7"
 };
 
 // Initialize Firebase only once
