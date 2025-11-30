@@ -1,5 +1,22 @@
 # Welcome to your Lovable project
 
+
+# Student Feedback App
+
+A simple full-stack app where students can submit feedback with name, email, message, and rating (1–5). Data is stored in Firebase Firestore and displayed on the front-end built with Lovable.
+
+## LLM-Generated Schema
+
+We used an LLM to generate the schema for the `feedbacks` collection with fields:
+- name (string)
+- email (string)
+- message (string)
+- rating (integer 1–5)
+- created_at (timestamp)
+
+
+
+
 ## Project info
 
 **URL**: https://lovable.dev/projects/3291f8cb-cb62-43b8-98d0-68dc3f4bcf7a
