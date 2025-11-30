@@ -1,6 +1,7 @@
 # Welcome to your Lovable project
 
 
+
 # Student Feedback App
 
 A simple full-stack app where students can submit feedback with name, email, message, and rating (1–5). Data is stored in Firebase Firestore and displayed on the front-end built with Lovable.
