@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { getFeedbacks, Feedback } from "@/lib/firebaseClient";
 import FeedbackForm from "@/components/FeedbackForm";
 import FeedbackList from "@/components/FeedbackList";
-import { GraduationCap, MessageSquareText } from "lucide-react";
-
+import { GraduationCap, MessageSquareText, Database } from "lucide-react";
+import { Button } from "@/components/ui/button";
 const Index = () => {
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
   const [loading, setLoading] = useState(true);
@@ -28,14 +29,22 @@ const Index = () => {
     <main className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-10">
-        <div className="container mx-auto px-4 py-4 flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-            <GraduationCap className="w-5 h-5 text-primary" />
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+              <GraduationCap className="w-5 h-5 text-primary" />
+            </div>
+            <div>
+              <h1 className="text-lg font-bold text-foreground">Student Feedback</h1>
+              <p className="text-xs text-muted-foreground">Share your learning experience</p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-lg font-bold text-foreground">Student Feedback</h1>
-            <p className="text-xs text-muted-foreground">Share your learning experience</p>
-          </div>
+          <Button asChild variant="outline" className="gap-2">
+            <Link to="/social">
+              <Database className="h-4 w-4" />
+              LiveFeed Social Demo
+            </Link>
+          </Button>
         </div>
       </header>
 
